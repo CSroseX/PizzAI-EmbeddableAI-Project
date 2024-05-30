@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<body style="background-image: url(/static/images/pexels-pixabay-220122.jpg); ">
+
+
+    <audio autoplay>
+        <source src="/play_local_wav" type="audio/wav" />
+    </audio>
+
+    <section class="main-section">
+
+
+        <div class="container-main-redirect petit-formal-script-regular">
+            <p>
+                <div>We noticed you asked for a </div>
+
+                <p><strong>{{pizzaSize}} pizza</strong></p>
+                
+                <div> with the following topping: </div>
+            </p>
+
+            <ul class="block-27" style="list-style-type:square">
+                {% for topping in pizzaTopping %}
+                <li>
+                    <p><strong>{{topping}}</strong></p>
+                </li>
+                {% endfor %}
+            </ul>
+            
+            <div style="display: flex; flex-direction: row; gap: 20px;">
+                <form style="display: inline;" action="/get_topping" method="POST">
+                    <input class="two-btns" type="submit" value="Recording Again" />
+                </form>
+                <form style="display: inline;" action="/get_order" method="POST">
+                    <input class="two-btns" type="submit" value="Continue">
+                </form>
+            </div>
+            
+        </div>
+        <div class="home-image" style="margin-right: 10rem;">
+            <img src="/static/images/Pizza-Toppings.webp" alt="pizza image" id="delivery-image" style="height: 70vh; width: 120%;">
+        </div>
+        <div class="overlay"></div>
+        </div>
+    </section>
+</body>
+{% endblock body %}
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>about</title>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/static/css/about.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Abel&family=K2D:ital,wght@1,500&family=Montserrat:wght@400;500&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:wght@100&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Calligraffitti&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Petit+Formal+Script&display=swap"
+        rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+</head>
+<body class="body" id="body__wrapper" style="background-color: #1e1e1e;">
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar navbar-gradient" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/static/images/pizza.png" class="mr-2" style="width: 30px;">    
+                <span class="courgette-regular" style="font-size: 25px;">PizzAI Plazza</span><br>
+                
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+
+            <div>
+                <ul class="navbar-items">
+                    <li class="nav-item"><a href="/">Home</a></li>
+                    <li class="nav-item"><a href="#" id="about-link">About</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+	<div class="page__wrapper">
+		<h1 class="heading">Details of the project</h1>
+		<div class="accordion">
+			<details>
+			  <summary>About this project</summary>
+			  <p>The project integrates HTML, CSS, and JavaScript to create a web application primarily powered by Flask. Unlike utilizing Watson's API, it opts for Google's speech to text and text to speech services, reducing complexity while maintaining functionality. The API integration enriches the website's capabilities, facilitating seamless interaction. Leveraging template inheritance using Jinja2 module, it ensures consistent design and functionality across multiple pages. The project also harnesses the nltk library of Python for natural language processing tasks. Furthermore, it integrates with Google Cloud services for additional functionalities and scalability. Overall, the project embodies an embeddable AI concept, blending various technologies to deliver a sophisticated yet user-friendly web experience.</p>
+			</details>
+			<details>
+			  <summary>How to Use/Run this project</summary>
+			  <p>To use this project locally, set up a virtual environment and install the required libraries from the provided requirements.txt file. To enable AI features like speech to text and text to speech, sign up for Google Cloud services or explore alternatives like AssemblyAI or Watson. By following these steps, you can efficiently harness the project's capabilities for your web application. For more details, you can see the references section below</p>
+			</details>
+			<details>
+			  <summary>references</summary>
+			  <p>1. <a href="https://cognitiveclass.ai/courses/improve-customer-support-with-ai-powered-voice-services#about-course">cognitiveclass.ai 's course "Improve Customer Support with AI-powered Voice Services"</a> <br>
+                2. <a href="https://cloud.google.com/speech-to-text/docs">Google.cloud's speech to text documentation</a></p>
+			</details>
+			<details>
+			  <summary>About me</summary>
+			  <p>Chitransh Saxena is a digital sorcerer, wielding code like magic spells. With a B.Tech from Manipal University, Jaipur, he's deeply into AI and cybersecurity. When not coding, he's strategizing on a chessboard or crafting sleek interfaces with HTML, CSS, and JavaScript. Python, C, and C++ are his trusted allies. As Cyber Space VP, he safeguards the digital realm with innovation and humor. Chitransh: where tech meets wit! For more info, check the home page. To reach him out, email him at chitrashsaxena67@gmail.com</p>
+			</details>
+            <details>
+                <summary>Possible improvements and suggestions</summary>
+                <p>1. Sometimes the AI model fails to recognize the words spoken, especially while recording customer address. <br>2. Few bugs might be encountered while clicking on the continue button giving 'AttributeError' of the clean_text() function. This happens because the AI model fails to store the words processed. <br>3. Can add more functionality by adding alternate method of input rather than voice. <br>4. To improve the getinfo part where it records customer address, you can add stop words according to the place you live just like i did for pizza size and toppings. This way the AI model will be more speciifc and accurate.</p>
+              </details>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="index.js"></script>
+</html>

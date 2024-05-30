@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<section class="main-section">
+    <video autoplay loop muted playsinline class="background-clip">
+        <source src="/static/videos/3752509-hd_1920_1080_24fps.mp4" type="video/mp4">
+    </video>
+
+    <div class="container-main">
+        <div class="home-desc">
+            <p class="petit-formal-script-regular">Experience a taste sensation at PizzAI Plaza - where authentic
+                Italian pizza meets cutting-edge technology.</p>
+
+            <form action="/get_info" method="POST">
+                <button class="btn draw-border petit-formal-script-regular"
+                    style="padding: 1.5rem; font-weight:900;">Order Now</button>
+            </form>
+        </div>
+
+        <div class="home-image">
+            <img src="/static/images/bg_1.png" alt="pizza image" id="pizza-image">
+        </div>
+    </div>
+</section>
+{% endblock body %}

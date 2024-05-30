@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<body style="background-image: url(/static/images/bg_1\(bg\).jpg);">
+
+
+    <audio autoplay>
+        <source src="/play_local_wav" type="audio/wav" />
+    </audio>
+
+    <section class="main-section">
+
+
+        <div class="container-main">
+            <div class="home-desc petit-formal-script-regular">
+                <p style="font-size: 20px;" class="petit-formal-script-regular">Where would you like us to deliver your delicious pizza to ?</p>
+                <div class="sub-container " id="requests">
+                    <button class="btn draw-border" id="requestButton"  style="padding: 1.5rem; font-weight:900;">Place Your Order</button>
+                </div>
+                <div class="sub-container " id="buttons" style="display: none;">
+                    <button class="three-btns" id="startButton">Start Recording</button>
+                    <button class="three-btns" id="stopButton">Stop Recording</button>
+                    <button class="three-btns" id="uploadRecordingButton">Continue</button>
+                </div>
+                <div>
+                    <ul class="list-unstyled" id="ul"></ul>
+                </div>
+                <div id="recordingMsg" style="display: none;">
+                    <p style="font-size:105%;">Recording!</p>
+                </div>
+                <div id="uploadRecordingMsg" style="display: none;">
+                    <p style="font-size:105%;">Audio uploading!</p>
+                </div>
+                <!-- <div class="col-md-8">
+                    <form class="form-inline" action="/get_info_upload_wav" method="POST" enctype="multipart/form-data">
+                        <input class="btn btn-primary p-3 px-xl-4 py-xl-3" type="file" name="info_upload_wav">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="uploadButton">Continue</button>
+                    </form>
+                </div>
+                <div id="uploadMsg" style="display: none;">
+                    <p style="font-size:105%;">Audio uploading!</p>
+                </div> -->
+
+
+            </div>
+            <div class="home-image" style="margin-right: 10rem;">
+                <img src="/static/images/lucian-alexe-afDu-GuxjjM-unsplash.jpg" alt="pizza image" id="delivery-image" >
+            </div>
+            <div class="overlay"></div>
+        </div>
+    </section>
+</body>
+{% endblock body %}
+
+{% block script %}
+<script>
+    let id = val => document.getElementById(val),
+        log = console.log.bind(console),
+        ul = id("ul"),
+        requestButton = id("requestButton"),
+        startButton = id("startButton"),
+        stopButton = id("stopButton"),
+        uploadButton = id("uploadButton"),
+        uploadRecordingButton = id("uploadRecordingButton"),
+        media,
+        stream,
+        recorder,
+        audioChunks;
+
+    requestButton.onclick = e => {
+        let mediaOptions = {
+            audio: {
+                tag: "audio",
+                type: "audio/wav",
+                ext: ".wav",
+                category: { audio: true, video: false }
+            }
+        };
+
+        media = mediaOptions.audio;
+        id("requests").style.display = "none";
+        id("buttons").style.display = "inherit";
+        navigator.mediaDevices.getUserMedia(media.category).then(_stream => {
+            stream = _stream;
+            recorder = new RecordRTC(stream, {
+                type: "audio",
+                mimeType: "audio/wav",
+                recorderType: RecordRTC.MediaStreamRecorder,
+                numberOfAudioChannels: 2,
+                desiredSampRate: 16000,
+                audioBitsPerSecond: 128000
+            });
+            log("ready for recording in wav format");
+        }).catch(log);
+
+    }
+
+    startButton.onclick = e => {
+        document.getElementById("recordingMsg").style.display = "block";
+        audioChunks = [];
+        startButton.disabled = true;
+        stopButton.disabled = false;
+        recorder.startRecording();
+        log("Start record");
+    }
+
+    stopButton.onclick = e => {
+        document.getElementById("recordingMsg").style.display = "none";
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        recorder.stopRecording(stopRecordingCallback);
+        log("end record");
+    }
+
+    uploadRecordingButton.onclick = e => {
+        document.getElementById("uploadRecordingMsg").style.display = "block";
+        uploadFile();
+    }
+
+    function stopRecordingCallback() {
+        audioChunks.push(recorder.getBlob());
+        displayFile();
+    }
+
+    function displayFile() {
+        let blob = new Blob(audioChunks, { type: media.type }),
+            url = URL.createObjectURL(blob),
+            li = document.createElement("li"),
+            audio = document.createElement(media.tag);
+        audio.controls = true;
+        audio.src = url;
+        li.appendChild(audio);
+        ul.appendChild(li);
+    }
+
+    function uploadFile() {
+        let blob = new Blob(audioChunks, { type: media.type }),
+            data = new FormData();
+        data.set("info_record_wav", blob, `info_record${media.ext}`);
+        fetch("/get_info_record_wav",
+            {
+                method: "POST",
+                body: data
+            })
+            .then(response => { log(response.status); })
+            .then(response => { location.href = "get_info_redirect"; });
+    }
+</script>
+<script src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
+
+{% endblock script %}
+
+
+
+

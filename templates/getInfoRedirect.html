@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<body style="background-image: url(/static/images/fern-1250903_1280.jpg);">
+
+
+    <audio autoplay>
+        <source src="/play_local_wav" type="audio/wav" />
+    </audio>
+
+    <section class="main-section">
+
+
+        <div class="container-main">
+            <div class="home-desc petit-formal-script-regular">
+                <p style="font-size: 20px;">We noticed you requested the pizza to be delivered to:</p>
+                <p class="mb-4 mb-md-5 " class="courgette-regular">{{customerAddress}}</p>
+
+                <div style="display: flex; flex-direction: row; gap: 10px; justify-content: flex-end; font-weight: 900;">
+                    <form style="display: inline;" action="/get_info" method="POST">
+                        <input class="two-btns" type="submit" value="Recording Again" />
+                    </form>
+                    <form style="display: inline;" action="/get_topping" method="POST">
+                        <input class="two-btns" type="submit" value="Continue">
+                    </form>
+                </div>
+                
+ 
+            </div>
+            <div class="home-image" style="margin-right: 10rem;">
+                <img src="/static/images/pizza_delivery.webp" alt="pizza image" id="delivery-image" style="height: 70vh;">
+            </div>
+            <div class="overlay"></div>
+        </div>
+    </section>
+</body>
+{% endblock body %}
+
+
+{% block script %}
+<script>
+    let id = val => document.getElementById(val),
+        log = console.log.bind(console),
+        ul = id("ul"),
+        requestButton = id("requestButton"),
+        startButton = id("startButton"),
+        stopButton = id("stopButton"),
+        uploadButton = id("uploadButton"),
+        uploadRecordingButton = id("uploadRecordingButton"),
+        media,
+        stream,
+        recorder,
+        audioChunks;
+
+    requestButton.onclick = e => {
+        let mediaOptions = {
+            audio: {
+                tag: "audio",
+                type: "audio/wav",
+                ext: ".wav",
+                category: { audio: true, video: false }
+            }
+        };
+
+        media = mediaOptions.audio;
+        id("requests").style.display = "none";
+        id("buttons").style.display = "inherit";
+        navigator.mediaDevices.getUserMedia(media.category).then(_stream => {
+            stream = _stream;
+            recorder = new RecordRTC(stream, {
+                type: "audio",
+                mimeType: "audio/wav",
+                recorderType: RecordRTC.MediaStreamRecorder,
+                numberOfAudioChannels: 2,
+                desiredSampRate: 16000,
+                audioBitsPerSecond: 128000
+            });
+            log("ready for recording in wav format");
+        }).catch(log);
+
+    }
+
+    startButton.onclick = e => {
+        document.getElementById("recordingMsg").style.display = "block";
+        audioChunks = [];
+        startButton.disabled = true;
+        stopButton.disabled = false;
+        recorder.startRecording();
+        log("Start record");
+    }
+
+    stopButton.onclick = e => {
+        document.getElementById("recordingMsg").style.display = "none";
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        recorder.stopRecording(stopRecordingCallback);
+        log("end record");
+    }
+
+    uploadRecordingButton.onclick = e => {
+        document.getElementById("uploadRecordingMsg").style.display = "block";
+        uploadFile();
+    }
+
+    function stopRecordingCallback() {
+        audioChunks.push(recorder.getBlob());
+        displayFile();
+    }
+
+    function displayFile() {
+        let blob = new Blob(audioChunks, { type: media.type }),
+            url = URL.createObjectURL(blob),
+            li = document.createElement("li"),
+            audio = document.createElement(media.tag);
+        audio.controls = true;
+        audio.src = url;
+        li.appendChild(audio);
+        ul.appendChild(li);
+    }
+
+    function uploadFile() {
+        let blob = new Blob(audioChunks, { type: media.type }),
+            data = new FormData();
+        data.set("info_record_wav", blob, `info_record${media.ext}`);
+        fetch("/get_info_record_wav",
+            {
+                method: "POST",
+                body: data
+            })
+            .then(response => { log(response.status); })
+            .then(response => { location.href = "get_info_redirect"; });
+    }
+</script>
+
+{% endblock script %}
+
+
