@@ -150,7 +150,7 @@ def get_order():
     elif not pizza_topping:
         print("\n\n\n------------missing pizza topping---------\n\n\n")
 
-    result = str("Thanks for using the La AI Pizza Plaza to place your order. Just wanted to double check that I got it right, you want a " +
+    result = str("Thanks for using the PizzAI Plaza to place your order. Just wanted to double check that I got it right, you want a " +
                  pizza_size[0] + " pizza with " + " ".join(map(str, pizza_topping)) + ". And the delivery address is " + customer_address +
                  ", is that correct?")
     text_to_speech(result, play_audio)
