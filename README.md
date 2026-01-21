@@ -1,4 +1,4 @@
-# Web Application with AI Integration 🌐🤖
+# Web Application with AI Integration 
 
 ## About This Project
 
