@@ -45,9 +45,6 @@ This project integrates HTML, CSS, and JavaScript to create a web application pr
 - [CognitiveClass.ai's course "Improve Customer Support with AI-powered Voice Services"](https://cognitiveclass.ai/)
 - [Google Cloud's Speech-to-Text documentation](https://cloud.google.com/speech-to-text/docs)
 
-## About Me 👨‍💻
-
-**Chitransh Saxena** is a digital sorcerer, wielding code like magic spells. With a B.Tech from Manipal University, Jaipur, he's deeply into AI and cybersecurity. When not coding, he's strategizing on a chessboard ♟️ or crafting sleek interfaces with HTML, CSS, and JavaScript. Python, C, and C++ are his trusted allies. As Cyber Space VP, he safeguards the digital realm with innovation and humor. Chitransh: where tech meets wit! For more info, check the home page. To reach him, email him at chitrashsaxena67@gmail.com.
 
 ## Possible Improvements and Suggestions 💡
 
